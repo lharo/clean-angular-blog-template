@@ -17,13 +17,6 @@ export class ViewPostComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.getPost();
   }
 
-  public deletePost() {
-    const id = this.route.snapshot.paramMap.get("id");
-  }
-
-  private getPost(): void {
-  }
 }

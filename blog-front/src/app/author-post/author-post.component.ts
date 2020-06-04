@@ -16,4 +16,4 @@ export class AuthorPostComponent implements OnInit {
   ngOnInit() {
   }
 
-  }
+}

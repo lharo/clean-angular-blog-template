@@ -9,11 +9,15 @@ import { HttpClient } from '@angular/common/http';
 })
 export class HomeComponent implements OnInit {
   fileToUpload: File = null
-  urlUpload = '/api/riesgo-cognitivo-api/v1.0/upload/img'
+  //urlUpload = '/api/riesgo-cognitivo-api/v1.0/upload/img'
+  urlUpload = 'http://localhost:5000/riesgo-cognitivo-api/v1.0/upload/img'
   name:string = ''
-  urlUriName = '/api/riesgo-cognitivo-api/v1.0/identify-image/'
-  ofacCheckUrl = '/api/riesgo-cognitivo-api/v1.0/check-ofac/'
-  satCheckUrl = '/api/riesgo-cognitivo-api/v1.0/check-sat/'
+  //urlUriName = '/api/riesgo-cognitivo-api/v1.0/identify-image/'
+  urlUriName = '/http://localhost:5000/riesgo-cognitivo-api/v1.0/identify-image/'
+  //ofacCheckUrl = '/api/riesgo-cognitivo-api/v1.0/check-ofac/'
+  ofacCheckUrl = 'http://localhost:5000/riesgo-cognitivo-api/v1.0/check-ofac/'
+  //satCheckUrl = '/api/riesgo-cognitivo-api/v1.0/check-sat/'
+  satCheckUrl = 'http://localhost:5000/riesgo-cognitivo-api/v1.0/check-sat/'
 
   ofacData = null
   satData = null
