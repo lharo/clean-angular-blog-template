@@ -57,11 +57,12 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "angular-blog-clean:build"
+            "browserTarget": "angular-blog-clean:build",
+            "proxyConfig": "proxy.conf.json"
           },
           "configurations": {
             "production": {
-              "browserTarget": "angular-blog-clean:build:production"
+              "browserTarget": "angular-blog-clean:build:production",
             }
           }
         },

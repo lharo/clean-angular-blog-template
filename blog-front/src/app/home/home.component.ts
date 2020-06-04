@@ -1,8 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-
-import { BlogPostService } from "../service/blog-post.service";
-import { BlogPost } from "../models/blog-post";
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: "app-home",
@@ -10,19 +8,82 @@ import { BlogPost } from "../models/blog-post";
   styleUrls: ["./home.component.css"]
 })
 export class HomeComponent implements OnInit {
-  loading: boolean = true;
-  posts: BlogPost[];
+  fileToUpload: File = null
+  urlUpload = '/api/riesgo-cognitivo-api/v1.0/upload/img'
+  name:string = ''
+  urlUriName = '/api/riesgo-cognitivo-api/v1.0/identify-image/'
+  ofacCheckUrl = '/api/riesgo-cognitivo-api/v1.0/check-ofac/'
+  satCheckUrl = '/api/riesgo-cognitivo-api/v1.0/check-sat/'
 
-  constructor(private postService: BlogPostService, private router: Router) {}
+  ofacData = null
+  satData = null
+
+  satDiv = false
+  ofacDiv = false
+
+  constructor(private router: Router, private http: HttpClient) {}
 
   ngOnInit() {
-    this.getPosts();
   }
 
-  private getPosts(): void {
-    this.postService.GetPosts().subscribe(posts => {
-      this.posts = posts;
-      this.loading = false;
-    });
+  onFileSelected(event){
+    this.fileToUpload = <File> event.target.files[0]
+  }
+
+  onInputChange(event){
+    this.name = event.target.value
+  }
+
+  onUpload(){
+    let fd = new FormData();
+    fd.append('file', this.fileToUpload, this.fileToUpload.name)
+    this.http.post(this.urlUpload, fd)
+      .subscribe( res => {
+        this.getNameFromUri(JSON.parse(JSON.stringify(res)).imgName)
+      })
+  }
+
+  getNameFromUri(name:string){
+    this.urlUriName += name
+    this.http.get(this.urlUriName)
+      .subscribe(res => {
+        this.name = res[0].name
+      })
+  }
+
+  onCheckOFAC(){
+    let name = encodeURIComponent(this.name.trim())
+    let url = this.ofacCheckUrl + name
+    this.http.get(url)
+      .subscribe(res => {
+        console.log(res)
+        this.ofacData = res
+        this.showOFACResults();
+      })
+  }
+
+  onCheckSAT(){
+    let name = encodeURIComponent(this.name.trim())
+    let url = this.satCheckUrl + name
+    this.http.get(url)
+    .subscribe(res => {
+      this.satData = res
+      this.showSATResults();
+    })
+  }
+
+  onCheckBoth(){
+    this.onCheckOFAC();
+    this.showSATResults();
+  }
+
+  showSATResults(){
+    this.satDiv = true
+  }
+
+  showOFACResults(){
+    this.ofacDiv = true
   }
 }
+
+

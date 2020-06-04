@@ -1,19 +1,28 @@
-<h1 style="text-align: center; margin-bottom: 12px; color: lightslategray;">Recent Posts</h1>
-<app-loading *ngIf="loading"></app-loading>
-<div class="row" *ngIf="!loading">
-  <div class="col-lg-8 col-md-10 mx-auto">
-    <div *ngFor="let post of posts">
-      <app-preview-post [post]="post"></app-preview-post>
-      <hr>
-    </div>
-
-    <div class="clearfix">
-      <a class="btn btn-secondary float-left pointer" routerLink="/author-post">
-        New Post
-        <i class="fa fa-plus" aria-hidden="true"></i></a>
-      <a class="btn btn-secondary float-right pointer" routerLink="/posts">
-        All Posts &rarr;
-      </a>
-    </div>
-  </div>
+<div style="text-align: center">
+    <h1>Consulta de Riesgo Cognitivo</h1>
+    <br><br>
+    <input type="file" (change)="onFileSelected($event)">
+    <br><br>
+    <button type="button" (click)="onUpload()" 
+        style="background-color: #555555; border: none; color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer;"
+        >Subir Imagen</button>
+    <br><br>
+    <input type="text" [(ngModel)]="name" (change)="onInputChange($event)"
+        style="width: 100%; padding: 12px 20px; margin: 8px 0; display: inline-block; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; text-align: center;">
+    <br><br>
+    <button type="button" (click)="onCheckOFAC()" 
+        style="margin-left: 30px; background-color: #008CBA; border: none; color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer;"
+        >Checar OFAC</button>
+    <button type="button" (click)="onCheckSAT()" 
+        style="margin-left: 30px; background-color: #4CAF50; border: none; color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer;"
+        >Checar SAT</button>
+    <button type="button" (click)="onCheckBoth()" 
+        style="margin-left: 30px; background-color: #f44336; border: none; color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer;"
+        >Checar Ambos</button>
+</div>
+<div *ngIf="satDiv">
+    SAT
+</div>
+<div *ngIf="ofacDiv">
+    OFAC
 </div>
